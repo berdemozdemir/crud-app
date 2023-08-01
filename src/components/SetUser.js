@@ -22,6 +22,7 @@ function SetUser({ selectedUser, users, setUsers, onHideModal }) {
     const newData = [...users];
     newData[findIndex] = formData;
     setUsers(newData);
+    onHideModal();
   }
 
   return (
@@ -80,13 +81,14 @@ function SetUser({ selectedUser, users, setUsers, onHideModal }) {
 
       <div className="border-t-2 flex justify-end [&>button]:mr-4 mt-[15%]">
         <button
+          type="button"
           onClick={onHideModal}
           className="rounded-md py-1 px-4 mt-4 border-[2px] opacity-70 hover:border-blue-600 hover:text-blue-600"
         >
           Cancel
         </button>
         <button
-          onClick={onHideModal}
+          type="submit"
           className="text-white bg-blue-600 border-[2px] py-1 px-4 rounded-md mt-4 hover:bg-blue-400"
         >
           OK
