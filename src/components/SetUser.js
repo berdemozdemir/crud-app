@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { modalActions } from "../store/modal-slice";
 
-function SetUser({ selectedUser, users, setUsers, onHideModal }) {
+function SetUser({ selectedUser, users, onHideModal }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     website: "",
   });
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (selectedUser) {
@@ -18,11 +22,15 @@ function SetUser({ selectedUser, users, setUsers, onHideModal }) {
 
   function submitHandler(e) {
     e.preventDefault();
+
     const findIndex = users.findIndex((item) => item.id === formData.id);
+
     const newData = [...users];
     newData[findIndex] = formData;
-    setUsers(newData);
-    onHideModal();
+
+    // setUsers(newData);
+    dispatch(modalActions.setUsers(newData))
+    dispatch(modalActions.hideModalHandler());
   }
 
   return (
@@ -36,8 +44,6 @@ function SetUser({ selectedUser, users, setUsers, onHideModal }) {
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
         </div>
-
-        {/* // *lari nasil kirmizi yapicaz bilemedim */}
 
         <div className="flex justify-end mr-4">
           <label className="my-auto opacity-75 before:content-['*']">
@@ -82,7 +88,7 @@ function SetUser({ selectedUser, users, setUsers, onHideModal }) {
       <div className="border-t-2 flex justify-end [&>button]:mr-4 mt-[15%]">
         <button
           type="button"
-          onClick={onHideModal}
+          onClick={() => dispatch(modalActions.hideModalHandler())}
           className="rounded-md py-1 px-4 mt-4 border-[2px] opacity-70 hover:border-blue-600 hover:text-blue-600"
         >
           Cancel
